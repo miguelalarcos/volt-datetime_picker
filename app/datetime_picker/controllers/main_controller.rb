@@ -3,7 +3,11 @@ module DatetimePicker
     reactive_accessor :show
 
     def date_f
-      attrs.value.strftime(attrs.date_format)
+      if attrs.value.nil?
+        ''
+      else
+        attrs.value.strftime(attrs.date_format)
+      end
     end
 
     def date_f=(value)
@@ -12,7 +16,7 @@ module DatetimePicker
 
     def select_day
       d = attrs.data[:date]
-      t = attrs.value
+      t = get_date
       d = Time.new d.year, d.month, d.day, t.hour, t.min
       attrs.value = d
       attrs.hide_calendar
@@ -22,43 +26,63 @@ module DatetimePicker
       self.show = false
     end
 
+    def get_date
+      if attrs.value.nil?
+        if attrs.time
+          Time.now
+        else
+          d = Time.now
+          Time.new d.year, d.month, d.day
+        end
+      else
+        attrs.value
+      end
+    end
+
     def minusMonth
-      d = attrs.value
+      d = get_date
       attrs.value = Time.new(d.year, d.month - 1, d.day, d.hour, d.min)
     end
 
     def plusMonth
-      d = attrs.value
+      d = get_date
       attrs.value = Time.new(d.year, d.month + 1, d.day, d.hour, d.min)
     end
 
     def minusYear
-      d = attrs.value
+      d = get_date
       attrs.value = Time.new(d.year-1, d.month, d.day, d.hour, d.min)
     end
 
     def plusYear
-      d = attrs.value
+      d = get_date
       attrs.value = Time.new(d.year+1, d.month, d.day, d.hour, d.min)
     end
 
     def minusHour
-      attrs.value = Time.new(attrs.value.year, attrs.value.month, attrs.value.day, attrs.value.hour - 1, attrs.value.min)
+      d = get_date
+      attrs.value = Time.new(d.year, d.month, d.day, d.hour - 1, d.min)
     end
 
     def plusHour
-      attrs.value = Time.new(attrs.value.year, attrs.value.month, attrs.value.day, attrs.value.hour + 1, attrs.value.min)
+      d = get_date
+      attrs.value = Time.new(d.year, d.month, d.day, d.hour + 1, d.min)
     end
 
     def minusMinute
-      attrs.value = Time.new(attrs.value.year, attrs.value.month, attrs.value.day, attrs.value.hour, attrs.value.min - 1)
+      d = get_date
+      attrs.value = Time.new(d.year, d.month, d.day, d.hour, d.min - 1)
     end
 
     def plusMinute
-      attrs.value = Time.new(attrs.value.year, attrs.value.month, attrs.value.day, attrs.value.hour, attrs.value.min + 1)
+      d = get_date
+      attrs.value = Time.new(d.year, d.month, d.day, d.hour, d.min + 1)
     end
 
     def days(week, date)
+      if date.nil?
+        date = Time.now
+      end
       ret = []
       ini_month = Time.new(date.year,date.month)
       ini_day = ini_month - 60*60*24*(ini_month.wday-1)
@@ -88,6 +112,30 @@ module DatetimePicker
 
     def weeks
       (0..5).to_a
+    end
+
+    def time_display
+      if attrs.value.nil?
+        Time.now.strftime('%H:%M')
+      else
+        attrs.value.strftime('%H:%M')
+      end
+    end
+
+    def month_display
+      if attrs.value.nil?
+        Time.now.strftime('%m')
+      else
+        attrs.value.strftime('%m')
+      end
+    end
+
+    def year_display
+      if attrs.value.nil?
+        Time.now.strftime('%Y')
+      else
+        attrs.value.strftime('%Y')
+      end
     end
   end
 end

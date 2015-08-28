@@ -15,11 +15,13 @@
         <div class="xdatetime-popover">
             <div class="xdatetime-header">
                 <span class="minus-month" e-click="minusMonth"><i class="fa fa-minus"></i></span>
-                {{attrs.value.strftime('%m')}}
+                <!--{{attrs.value.strftime('%m')}}-->
+                {{month_display}}
                 <span class="plus-month" e-click="plusMonth"><i class="fa fa-plus"></i></span>
                 <span>&nbsp;&nbsp;</span>
                 <span class="minus-year" e-click="minusYear"><i class="fa fa-minus"></i></span>
-                {{attrs.value.strftime('%Y')}}
+                <!--{{attrs.value.strftime('%Y')}}-->
+                {{year_display}}
                 <span class="plus-year" e-click="plusYear"><i class="fa fa-plus"></i></span>
             </div>
             {{weeks.each do |w|}}
@@ -31,7 +33,8 @@
                 <span>&nbsp;&nbsp;</span>
                 <span e-click="plusHour" class="plus-hour"><i class="fa fa-plus"></i></span>
                 <span>&nbsp;&nbsp;</span>
-                <span >{{attrs.value.strftime('%H:%M')}}</span>
+                <!--<span >{{attrs.value.strftime('%H:%M')}}</span>-->
+                <span >{{time_display}}</span>
                 <span>&nbsp;&nbsp;</span>
                 <span e-click="minusMinute" class="minus-minute"><i class="fa fa-minus"></i></span>
                 <span>&nbsp;&nbsp;</span>
