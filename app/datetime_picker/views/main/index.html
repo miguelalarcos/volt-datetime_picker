@@ -1,0 +1,43 @@
+<:Day>
+    <span class="{{attrs.data[:decoration]}}" e-click="select_day">{{attrs.data[:value]}}</span>
+
+<:Week>
+    <div class="xdatetime-week">
+        {{days(attrs.w, attrs.value).each do |x|}}
+        <:day data="{{x}}" value="{{attrs.value}}" hide_calendar="{{attrs.hide_calendar}}" />
+        {{end}}
+    </div>
+
+<:Body>
+    <div class='xdatetime'>
+        <input type='text' disabled="disabled" e-click="self.show=!self.show" value="{{ date_f }}" />
+        {{if show}}
+        <div class="xdatetime-popover">
+            <div class="xdatetime-header">
+                <span class="minus-month" e-click="minusMonth"><i class="fa fa-minus"></i></span>
+                {{attrs.value.strftime('%m')}}
+                <span class="plus-month" e-click="plusMonth"><i class="fa fa-plus"></i></span>
+                <span>&nbsp;&nbsp;</span>
+                <span class="minus-year" e-click="minusYear"><i class="fa fa-minus"></i></span>
+                {{attrs.value.strftime('%Y')}}
+                <span class="plus-year" e-click="plusYear"><i class="fa fa-plus"></i></span>
+            </div>
+            {{weeks.each do |w|}}
+            <:week w="{{w}}" value="{{attrs.value}}" hide_calendar="{{hide_calendar}}" />
+            {{end}}
+            {{if attrs.time}}
+            <div class="xdatetime-bottom">
+                <span e-click="minusHour" class="minus-hour"><i class="fa fa-minus"></i></span>
+                <span>&nbsp;&nbsp;</span>
+                <span e-click="plusHour" class="plus-hour"><i class="fa fa-plus"></i></span>
+                <span>&nbsp;&nbsp;</span>
+                <span >{{attrs.value.strftime('%H:%M')}}</span>
+                <span>&nbsp;&nbsp;</span>
+                <span e-click="minusMinute" class="minus-minute"><i class="fa fa-minus"></i></span>
+                <span>&nbsp;&nbsp;</span>
+                <span e-click="plusMinute" class="plus-minute"><i class="fa fa-plus"></i></span>
+            </div>
+            {{end}}
+        </div>
+        {{end}}
+    </div>
